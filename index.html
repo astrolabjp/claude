@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lyric Lens — Spotify歌詞＆タップ辞書</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- 初回セットアップ画面 -->
+  <section id="setup-screen" class="screen hidden">
+    <div class="setup-card">
+      <h1>🎵 Lyric Lens</h1>
+      <p>Spotifyで再生中の曲の歌詞を表示し、単語をタップすると辞書で意味を調べられるアプリです。</p>
+      <ol class="setup-steps">
+        <li><a href="https://developer.spotify.com/dashboard" target="_blank" rel="noopener">Spotify Developer Dashboard</a> でアプリを作成</li>
+        <li>Redirect URI に <code id="redirect-uri-display"></code> を追加（API/SDKs は「Web API」を選択）</li>
+        <li>発行された <strong>Client ID</strong> を下に貼り付け</li>
+      </ol>
+      <input type="text" id="client-id-input" placeholder="Spotify Client ID" autocomplete="off" />
+      <button id="connect-btn" class="primary-btn">Spotifyと連携する</button>
+      <p class="note">Client IDはこのブラウザのlocalStorageにのみ保存されます。</p>
+    </div>
+  </section>
+
+  <!-- メイン画面 -->
+  <section id="player-screen" class="screen hidden">
+    <header id="now-playing">
+      <img id="album-art" alt="" />
+      <div class="track-info">
+        <div id="track-name">—</div>
+        <div id="artist-name">再生中の曲がありません</div>
+      </div>
+      <div class="header-actions">
+        <button id="logout-btn" title="連携解除">⏏</button>
+      </div>
+    </header>
+
+    <main id="lyrics-container">
+      <div id="lyrics-status">Spotifyで曲を再生してください…</div>
+      <div id="lyrics-lines"></div>
+    </main>
+
+    <!-- 辞書パネル -->
+    <aside id="dict-panel" class="hidden">
+      <div class="dict-header">
+        <span id="dict-word"></span>
+        <button id="dict-close">✕</button>
+      </div>
+      <div id="dict-body"></div>
+      <div class="dict-footer">
+        <a id="dict-translate-link" href="#" target="_blank" rel="noopener">Google翻訳で見る ↗</a>
+      </div>
+    </aside>
+  </section>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

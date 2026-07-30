@@ -1,0 +1,250 @@
+:root {
+  --bg: #121212;
+  --bg-card: #1e1e1e;
+  --fg: #e8e8e8;
+  --fg-dim: #9a9a9a;
+  --accent: #1db954;
+  --accent-soft: rgba(29, 185, 84, 0.15);
+  --line-height: 2.6rem;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.hidden { display: none !important; }
+
+/* ---------- セットアップ画面 ---------- */
+#setup-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.setup-card {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 480px;
+  width: 100%;
+}
+
+.setup-card h1 { margin-top: 0; }
+
+.setup-steps li { margin-bottom: 0.6rem; line-height: 1.6; }
+
+.setup-card code {
+  background: #000;
+  padding: 2px 6px;
+  border-radius: 4px;
+  word-break: break-all;
+}
+
+.setup-card a { color: var(--accent); }
+
+#client-id-input {
+  width: 100%;
+  padding: 0.7rem;
+  margin: 0.8rem 0;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background: #000;
+  color: var(--fg);
+  font-size: 1rem;
+}
+
+.primary-btn {
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #000;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primary-btn:hover { filter: brightness(1.1); }
+
+.note { color: var(--fg-dim); font-size: 0.8rem; }
+
+.error-msg { color: #ff6b6b; font-size: 0.9rem; }
+
+/* ---------- プレイヤー画面 ---------- */
+#player-screen {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+#now-playing {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem 1rem;
+  background: var(--bg-card);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  z-index: 2;
+}
+
+#album-art {
+  width: 52px;
+  height: 52px;
+  border-radius: 8px;
+  background: #333;
+  object-fit: cover;
+}
+
+.track-info { flex: 1; min-width: 0; }
+
+#track-name {
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#artist-name {
+  color: var(--fg-dim);
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header-actions button {
+  background: none;
+  border: 1px solid #444;
+  color: var(--fg-dim);
+  border-radius: 8px;
+  padding: 0.4rem 0.6rem;
+  cursor: pointer;
+}
+
+/* ---------- 歌詞表示 ---------- */
+#lyrics-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 40vh 1.5rem;
+  scroll-behavior: smooth;
+}
+
+#lyrics-status {
+  text-align: center;
+  color: var(--fg-dim);
+}
+
+.lyric-line {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.5;
+  margin-bottom: 1.4rem;
+  color: var(--fg-dim);
+  opacity: 0.55;
+  transition: opacity 0.3s, color 0.3s, transform 0.3s;
+  transform-origin: left center;
+}
+
+.lyric-line.active {
+  color: var(--fg);
+  opacity: 1;
+  transform: scale(1.06);
+}
+
+.lyric-line.past { opacity: 0.35; }
+
+.word {
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 0 1px;
+}
+
+.word:hover, .word.selected {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* ---------- 辞書パネル ---------- */
+#dict-panel {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-height: 55vh;
+  background: var(--bg-card);
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+@media (min-width: 720px) {
+  #dict-panel {
+    left: auto;
+    top: 80px;
+    bottom: 20px;
+    right: 20px;
+    width: 380px;
+    max-height: none;
+    border-radius: 16px;
+  }
+}
+
+.dict-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1.2rem;
+  border-bottom: 1px solid #333;
+}
+
+#dict-word { font-size: 1.3rem; font-weight: 700; }
+
+#dict-close {
+  background: none;
+  border: none;
+  color: var(--fg-dim);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+#dict-body {
+  overflow-y: auto;
+  padding: 1rem 1.2rem;
+  flex: 1;
+}
+
+.dict-lang {
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0.8rem 0 0.3rem;
+}
+
+.dict-lang:first-child { margin-top: 0; }
+
+.dict-pos { color: var(--fg-dim); font-style: italic; font-size: 0.85rem; }
+
+.dict-defs { margin: 0.3rem 0 0.6rem; padding-left: 1.3rem; }
+
+.dict-defs li { margin-bottom: 0.35rem; line-height: 1.5; }
+
+.dict-loading, .dict-empty { color: var(--fg-dim); }
+
+.dict-footer {
+  padding: 0.7rem 1.2rem;
+  border-top: 1px solid #333;
+}
+
+.dict-footer a { color: var(--accent); font-size: 0.9rem; text-decoration: none; }
