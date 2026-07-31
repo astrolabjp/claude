@@ -5,10 +5,14 @@ import { lookupWord, translateUrl } from "./dictionary.js";
 const $ = (id) => document.getElementById(id);
 
 const state = {
-  track: null,      // 現在の曲（spotify.getCurrentlyPlaying の戻り値）
-  lyrics: null,     // fetchLyrics の戻り値
+  track: null,        // 現在の曲（spotify.getCurrentlyPlaying の戻り値）
+  lyrics: null,       // fetchLyrics の戻り値
+  lyricsFor: null,    // 歌詞取得が完了した曲のID（失敗時はセットせずリトライ）
+  lyricsAttempts: 0,
   activeLine: -1,
 };
+
+const MAX_LYRICS_ATTEMPTS = 3;
 
 // ---------- 画面切り替え ----------
 
@@ -172,36 +176,54 @@ function closeDictionary() {
 // ---------- ポーリングループ ----------
 
 async function poll() {
-  let track = null;
   try {
-    track = await spotify.getCurrentlyPlaying();
-  } catch (e) {
-    if (e.message === "unauthorized") {
-      showSetup("Spotifyの認証が切れました。再度連携してください。");
-      return; // ループ停止
+    let track = null;
+    try {
+      track = await spotify.getCurrentlyPlaying();
+    } catch (e) {
+      if (e.message === "unauthorized") {
+        state.stopped = true;
+        showSetup("Spotifyの認証が切れました。再度連携してください。");
+        return; // ループ停止
+      }
     }
-  }
 
-  const changed = track?.id !== state.track?.id;
-  state.track = track;
+    const changed = track?.id !== state.track?.id;
+    state.track = track;
 
-  $("track-name").textContent = track?.name ?? "—";
-  $("artist-name").textContent = track ? track.artists.join(", ") : "再生中の曲がありません";
-  if (track?.albumArt) $("album-art").src = track.albumArt;
+    $("track-name").textContent = track?.name ?? "—";
+    $("artist-name").textContent = track ? track.artists.join(", ") : "再生中の曲がありません";
+    if (track?.albumArt) $("album-art").src = track.albumArt;
 
-  if (changed) {
-    closeDictionary();
-    state.lyrics = null;
-    renderLyrics();
-    if (track) {
-      $("lyrics-status").textContent = "歌詞を検索中…";
-      const forTrackId = track.id;
-      state.lyrics = await fetchLyrics(track);
-      if (state.track?.id === forTrackId) renderLyrics();
+    if (changed) {
+      closeDictionary();
+      state.lyrics = null;
+      state.lyricsFor = null;
+      state.lyricsAttempts = 0;
+      renderLyrics();
     }
-  }
 
-  setTimeout(poll, 2000);
+    // 歌詞が未取得ならフェッチ。通信失敗時は次のポーリングでリトライ
+    if (track && state.lyricsFor !== track.id && state.lyricsAttempts < MAX_LYRICS_ATTEMPTS) {
+      const status = $("lyrics-status");
+      status.textContent = "歌詞を検索中…";
+      status.classList.remove("hidden");
+      state.lyricsAttempts++;
+      try {
+        const lyrics = await fetchLyrics(track);
+        if (state.track?.id !== track.id) return; // フェッチ中に曲が変わった
+        state.lyrics = lyrics;
+        state.lyricsFor = track.id;
+        renderLyrics();
+      } catch {
+        if (state.lyricsAttempts >= MAX_LYRICS_ATTEMPTS && state.track?.id === track.id) {
+          status.textContent = "歌詞サーバーに接続できませんでした。ネットワークを確認してください。";
+        }
+      }
+    }
+  } finally {
+    if (!state.stopped) setTimeout(poll, 2000);
+  }
 }
 
 // 同期ハイライトはポーリングより細かく更新して滑らかに

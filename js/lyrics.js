@@ -1,6 +1,7 @@
 // LRCLIB (https://lrclib.net) から歌詞を取得する。無料・APIキー不要・CORS対応
 
 const API = "https://lrclib.net/api";
+const TIMEOUT_MS = 8000;
 
 // LRC形式 "[mm:ss.xx] text" を [{timeMs, text}] にパースする
 function parseLrc(lrc) {
@@ -25,34 +26,62 @@ function toResult(record) {
   return { instrumental: false, synced, plain };
 }
 
-// 曲情報から歌詞を検索。見つからなければ null
+// 曲の長さが近い候補を優先して選ぶ
+function pickBest(candidates, durationSec) {
+  return candidates
+    .filter((c) => c.syncedLyrics || c.plainLyrics || c.instrumental)
+    .sort((a, b) => Math.abs((a.duration ?? 0) - durationSec) - Math.abs((b.duration ?? 0) - durationSec))[0];
+}
+
+// 曲情報から歌詞を検索。見つからなければ null、全リクエストが通信失敗なら throw
 export async function fetchLyrics(track) {
-  const exact = new URLSearchParams({
+  const durationSec = track.durationMs / 1000;
+  let attempts = 0;
+  let failures = 0;
+
+  async function apiGet(path, params) {
+    attempts++;
+    try {
+      const res = await fetch(`${API}/${path}?${new URLSearchParams(params)}`, {
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      });
+      if (!res.ok) return null;
+      return await res.json();
+    } catch {
+      failures++;
+      return null;
+    }
+  }
+
+  // 戦略1: 完全一致（曲名・アーティスト・アルバム・長さ）
+  const exact = await apiGet("get", {
     track_name: track.name,
     artist_name: track.artists[0],
     album_name: track.album,
-    duration: Math.round(track.durationMs / 1000),
+    duration: Math.round(durationSec),
   });
-  try {
-    const res = await fetch(`${API}/get?${exact}`);
-    if (res.ok) {
-      const result = toResult(await res.json());
-      if (result) return result;
-    }
-  } catch { /* fall through to search */ }
+  const exactResult = toResult(exact);
+  if (exactResult) return exactResult;
 
-  // 完全一致で見つからない場合はあいまい検索で最も近いものを使う
-  try {
-    const q = new URLSearchParams({ track_name: track.name, artist_name: track.artists[0] });
-    const res = await fetch(`${API}/search?${q}`);
-    if (!res.ok) return null;
-    const candidates = await res.json();
-    const durationSec = track.durationMs / 1000;
-    const best = candidates
-      .filter((c) => c.syncedLyrics || c.plainLyrics)
-      .sort((a, b) => Math.abs(a.duration - durationSec) - Math.abs(b.duration - durationSec))[0];
-    return toResult(best);
-  } catch {
-    return null;
+  // 戦略2: 曲名＋アーティスト名で検索
+  const byArtist = await apiGet("search", {
+    track_name: track.name,
+    artist_name: track.artists[0],
+  });
+  if (Array.isArray(byArtist) && byArtist.length) {
+    const result = toResult(pickBest(byArtist, durationSec));
+    if (result) return result;
   }
+
+  // 戦略3: 曲名のみで検索
+  // Spotifyがアーティスト名をローカライズして返す場合（例: 周杰倫→ジェイ・チョウ）
+  // でも、曲名だけならヒットすることが多い
+  const byName = await apiGet("search", { q: track.name });
+  if (Array.isArray(byName) && byName.length) {
+    const result = toResult(pickBest(byName, durationSec));
+    if (result) return result;
+  }
+
+  if (failures >= attempts) throw new Error("lyrics network error");
+  return null;
 }
