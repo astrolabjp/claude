@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lyric Lens 中文 — 中国語歌詞＆ピンイン＆日本語辞書</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- 未連携のときの案内画面 -->
+  <section id="setup-screen" class="screen hidden">
+    <div class="setup-card">
+      <h1>🎵 Lyric Lens <span class="zh-badge">中文</span></h1>
+      <p>中国語の曲に特化したモードです。歌詞にピンインを表示し、単語をタップするとピンインと日本語の意味を表示します。</p>
+      <p>まずは<a href="index.html">メイン画面</a>でSpotifyと連携してください。連携済みならこのページを再読み込みすれば使えます。</p>
+      <a href="index.html" class="primary-btn link-btn">メイン画面へ</a>
+    </div>
+  </section>
+
+  <!-- メイン画面 -->
+  <section id="player-screen" class="screen hidden">
+    <header id="now-playing">
+      <img id="album-art" alt="" />
+      <div class="track-info">
+        <div id="track-name">—</div>
+        <div id="artist-name">再生中の曲がありません</div>
+      </div>
+      <div class="header-actions">
+        <button id="pinyin-toggle" class="active" title="ピンイン表示の切り替え">拼音</button>
+        <a href="index.html" class="mode-link" title="通常モードへ">A文</a>
+        <button id="logout-btn" title="連携解除">⏏</button>
+      </div>
+    </header>
+
+    <main id="lyrics-container">
+      <div id="lyrics-status">Spotifyで曲を再生してください…</div>
+      <div id="lyrics-lines"></div>
+    </main>
+
+    <!-- 辞書パネル -->
+    <aside id="dict-panel" class="hidden">
+      <div class="dict-header">
+        <div>
+          <span id="dict-word"></span>
+          <span id="dict-pinyin"></span>
+        </div>
+        <button id="dict-close">✕</button>
+      </div>
+      <div id="dict-body"></div>
+      <div class="dict-footer">
+        <a id="dict-translate-link" href="#" target="_blank" rel="noopener">Google翻訳（日本語）で見る ↗</a>
+      </div>
+    </aside>
+  </section>
+
+  <script type="module" src="js/chinese-app.js"></script>
+</body>
+</html>

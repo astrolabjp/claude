@@ -248,3 +248,75 @@ body {
 }
 
 .dict-footer a { color: var(--accent); font-size: 0.9rem; text-decoration: none; }
+
+/* ---------- 中国語モード ---------- */
+
+.zh-badge {
+  font-size: 0.9rem;
+  vertical-align: middle;
+  background: var(--accent);
+  color: #000;
+  border-radius: 6px;
+  padding: 2px 8px;
+  margin-left: 4px;
+}
+
+.link-btn {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: #000;
+  margin-top: 1rem;
+}
+
+.mode-link {
+  border: 1px solid #444;
+  color: var(--fg-dim);
+  border-radius: 8px;
+  padding: 0.4rem 0.6rem;
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+#pinyin-toggle {
+  background: none;
+  border: 1px solid #444;
+  color: var(--fg-dim);
+  border-radius: 8px;
+  padding: 0.4rem 0.6rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+#pinyin-toggle.active {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ピンインのルビ */
+.zh-line { line-height: 2.1; }
+
+.zh-line ruby rt {
+  font-size: 0.55em;
+  font-weight: 400;
+  color: var(--fg-dim);
+  letter-spacing: 0.02em;
+}
+
+.zh-line .word.selected ruby rt,
+.zh-line .word:hover ruby rt { color: var(--accent); }
+
+.hide-pinyin rt { display: none; }
+
+/* 辞書パネル内のピンイン・日本語訳 */
+#dict-pinyin {
+  color: var(--accent);
+  font-size: 1rem;
+  margin-left: 0.6rem;
+}
+
+.dict-ja {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  margin-bottom: 0.4rem;
+}
