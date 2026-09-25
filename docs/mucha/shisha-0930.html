@@ -1,0 +1,260 @@
+<title>9/30 渋谷ドーム試写</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+  :root{
+    color-scheme: light;
+    --paper:#eceded; --surface:#fbfbfa; --surface-2:#f1f2ef;
+    --ink:#23232b; --ink-2:#4c4c58; --muted:#71717f;
+    --rule:#d4d6d2; --rule-2:#e2e4e0;
+    --accent:#3f6350; --accent-soft:#dfe8e1;
+    --must:#8a5d12; --must-soft:#f2e7d0;
+    --block:#8b3a3a; --block-soft:#f3dedd;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --sans: "Zen Kaku Gothic New", "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif;
+    --serif: "Zen Old Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme: dark;
+      --paper:#16161a; --surface:#1e1e24; --surface-2:#25252d;
+      --ink:#e8e8ec; --ink-2:#bcbcc6; --muted:#8e8e9c;
+      --rule:#33333d; --rule-2:#2a2a33;
+      --accent:#8fbfa3; --accent-soft:#25332b;
+      --must:#d8ac5a; --must-soft:#332a18;
+      --block:#df9a98; --block-soft:#342020;
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --paper:#16161a; --surface:#1e1e24; --surface-2:#25252d;
+    --ink:#e8e8ec; --ink-2:#bcbcc6; --muted:#8e8e9c;
+    --rule:#33333d; --rule-2:#2a2a33;
+    --accent:#8fbfa3; --accent-soft:#25332b;
+    --must:#d8ac5a; --must-soft:#332a18;
+    --block:#df9a98; --block-soft:#342020;
+  }
+  body{background:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.75; margin:0;}
+  .wrap{max-width:46rem; margin:0 auto; padding-inline:18px; padding-block:34px 72px; display:flex; flex-direction:column; gap:40px;}
+  h1{font-family:var(--serif); font-weight:700; font-size:clamp(1.65rem,5.4vw,2.3rem); line-height:1.35; margin:0; text-wrap:balance; letter-spacing:.01em;}
+  h2{font-family:var(--serif); font-weight:700; font-size:1.2rem; margin:0; text-wrap:balance;}
+  h3{font-size:.95rem; font-weight:700; margin:0; color:var(--ink-2);}
+  p{margin:0;}
+  .eyebrow{font-family:var(--mono); font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin:0 0 10px;}
+  .lede{color:var(--ink-2); font-size:1rem; margin-top:14px;}
+  header{border-bottom:1px solid var(--rule); padding-bottom:26px;}
+  .meta{display:flex; flex-wrap:wrap; gap:8px 18px; margin-top:18px; font-family:var(--mono); font-size:.76rem; color:var(--muted);}
+  .meta b{color:var(--ink-2); font-weight:500;}
+  section{display:flex; flex-direction:column; gap:16px;}
+  .goals{display:flex; flex-direction:column; gap:10px; counter-reset:g;}
+  .goal{display:grid; grid-template-columns:2rem 1fr; gap:14px; background:var(--surface); border:1px solid var(--rule-2); border-left:3px solid var(--accent); padding:14px 16px;}
+  .goal::before{counter-increment:g; content:counter(g); font-family:var(--mono); font-size:1.1rem; color:var(--accent); line-height:1.5;}
+  .goal p{font-size:.9rem; color:var(--ink-2); margin-top:4px;}
+  .goal strong{font-size:.97rem; color:var(--ink);}
+  .scroll{overflow-x:auto; border:1px solid var(--rule-2); background:var(--surface);}
+  table{border-collapse:collapse; width:100%; font-size:.86rem; min-width:34rem;}
+  th,td{text-align:left; padding:10px 13px; border-bottom:1px solid var(--rule-2); vertical-align:top;}
+  thead th{font-size:.72rem; letter-spacing:.08em; color:var(--muted); font-weight:500; background:var(--surface-2); white-space:nowrap;}
+  tbody tr:last-child td{border-bottom:0;}
+  td.cut{font-family:var(--mono); white-space:nowrap; font-variant-numeric:tabular-nums; color:var(--ink-2);}
+  .chip{display:inline-block; font-size:.7rem; font-family:var(--mono); letter-spacing:.06em; padding:2px 8px; border-radius:2px; white-space:nowrap;}
+  .c-must{background:var(--must-soft); color:var(--must);}
+  .c-try{background:var(--accent-soft); color:var(--accent);}
+  .c-spare{background:var(--surface-2); color:var(--muted); border:1px solid var(--rule-2);}
+  .days{display:flex; flex-direction:column; gap:0; border:1px solid var(--rule-2); background:var(--surface);}
+  .day{display:grid; grid-template-columns:5.5rem 1fr; gap:14px; padding:13px 16px; border-bottom:1px solid var(--rule-2);}
+  .day:last-child{border-bottom:0;}
+  .day.out{background:var(--surface-2); color:var(--muted);}
+  .day.peak{border-left:3px solid var(--must); padding-left:13px;}
+  .day .d{font-family:var(--mono); font-size:.8rem; color:var(--ink-2); font-variant-numeric:tabular-nums;}
+  .day.out .d{color:var(--muted);}
+  .day .w{font-size:.87rem;}
+  .day .w small{display:block; color:var(--muted); font-size:.78rem; margin-top:3px;}
+  ul{margin:0; padding-left:1.15rem; display:flex; flex-direction:column; gap:7px; font-size:.9rem; color:var(--ink-2);}
+  li strong{color:var(--ink);}
+  .note{background:var(--surface); border:1px solid var(--rule-2); border-left:3px solid var(--block); padding:14px 16px; font-size:.88rem; color:var(--ink-2); display:flex; flex-direction:column; gap:7px;}
+  .note b{color:var(--ink);}
+  .kv{display:flex; flex-direction:column; gap:0; border:1px solid var(--rule-2); background:var(--surface); font-size:.87rem;}
+  .kv > div{display:grid; grid-template-columns:7rem 1fr; gap:14px; padding:11px 16px; border-bottom:1px solid var(--rule-2);}
+  .kv > div:last-child{border-bottom:0;}
+  .kv dt, .kv .k{font-family:var(--mono); font-size:.76rem; color:var(--muted); font-variant-numeric:tabular-nums;}
+  .kv .v{color:var(--ink-2);}
+  footer{border-top:1px solid var(--rule); padding-top:20px; font-size:.8rem; color:var(--muted); display:flex; flex-direction:column; gap:6px;}
+  @media (max-width:430px){
+    .day{grid-template-columns:1fr; gap:4px;}
+    .kv > div{grid-template-columns:1fr; gap:3px;}
+    .goal{grid-template-columns:1.4rem 1fr; gap:10px;}
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Mucha / IPS2026 — dome test</p>
+    <h1>9/30 渋谷ドーム試写の段取り</h1>
+    <p class="lede">9/24 の打合せで決まった優先順位と、9/20 に持ち越した画角の基準確定を、当日の動きに落としたもの。正味の作業日は 9/25 夕方・9/28・9/29 の3日。</p>
+    <div class="meta">
+      <span><b>会場使用</b> 〜22:00（村山さんメール）</span>
+      <span><b>テスト枠</b> 2回（間に再書き出し）</span>
+      <span><b>制作完了</b> 10/31</span>
+      <span><b>本番</b> 11/9〜13 の週</span>
+    </div>
+  </header>
+
+  <section>
+    <div>
+      <p class="eyebrow">確定して帰るもの</p>
+      <h2>試写のゴールは3つ</h2>
+    </div>
+    <div class="goals">
+      <div class="goal">
+        <div>
+          <strong>絵の表示サイズの基準</strong>
+          <p>「宇宙の模型」の基本画面に対して約200%で組んでいる想定を、実測で確定する。等身大の人物が並んで見える感覚になっているか。ここが決まらないと以降の全カットの組み方が動く。</p>
+        </div>
+      </div>
+      <div class="goal">
+        <div>
+          <strong>明るさと湾曲の許容範囲</strong>
+          <p>球面に貼るのではなく、空間に平面が浮いて見えるか。4:3 のグリッド素材で歪みを確認し、大阪で使った「四角いウィンドウを出す」手法が渋谷でも成立するかを見る。</p>
+        </div>
+      </div>
+      <div class="goal">
+        <div>
+          <strong>2枠運用の段取り</strong>
+          <p>1枠目で確認 → インターバルにノートPCとBlenderで直して書き出し → 2枠目で再確認。この往復が回るかを実地で試す。回れば以降のテストの進め方が変わる。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div>
+      <p class="eyebrow">9/24 打合せで確定</p>
+      <h2>上映素材の優先順位</h2>
+    </div>
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr><th>カット</th><th>内容</th><th>見どころ・詰めるところ</th><th>扱い</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="cut">C12</td>
+            <td>花・ユリ</td>
+            <td>基本動作一式（芽吹く→水平に広がる→縦に伸びる→人物→花冠→人物フェード→花冠消去）。角度をまっすぐに直す。輪は20〜30個まで増やす。人物が消えた後に茎だけ残らないよう、背後に静止画の花をかき割りで置いてクロスフェード。</td>
+            <td><span class="chip c-must">必達</span></td>
+          </tr>
+          <tr>
+            <td class="cut">C10 / C11</td>
+            <td>花・2作目</td>
+            <td>2連発の接続と前後の動き。単体の完成度より大枠の流れを優先。拡大率は後半に向けて加速させ、手前に来た瞬間に一気に大きく見せる。</td>
+            <td><span class="chip c-must">必達</span></td>
+          </tr>
+          <tr>
+            <td class="cut">—</td>
+            <td>作画スライドショー</td>
+            <td>静止画を5秒刻みで並べ、「宇宙の模型」と同じサイズではめて投影。サイズ基準の検証はこれで行う。</td>
+            <td><span class="chip c-must">必達</span></td>
+          </tr>
+          <tr>
+            <td class="cut">C25 / C26</td>
+            <td>星・金星と月</td>
+            <td>宵の明星と、曇った日の月。存在感が弱いので嘘でも大きく・強く光らせる。人物の輪郭からにじむバックライト、完成時に明度を一瞬上げるアクセント。</td>
+            <td><span class="chip c-try">できれば</span></td>
+          </tr>
+          <tr>
+            <td class="cut">—</td>
+            <td>ズビロフ城＋ハレー彗星</td>
+            <td>彗星の頭を縮小し、取り巻きのパーティクルを追加。城は彗星シーン用の正しい向きで。彗星の標準カット1点は9/30までの目標として登録済み。</td>
+            <td><span class="chip c-try">できれば</span></td>
+          </tr>
+          <tr>
+            <td class="cut">—</td>
+            <td>逆さまのパリ</td>
+            <td>万博会場のパノラマ → 水面に映る逆さまのパリで閉じる流れ。コンテが来なければ素材合わせまでで止める。</td>
+            <td><span class="chip c-spare">余力</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:.85rem; color:var(--muted);">9/25 が延期・統合されて作業日が増えた形だが、方針は「後ろにずらす」ではなく「明日見せるつもりだったところまで一旦形にして、残りは次へ進む」。</p>
+  </section>
+
+  <section>
+    <div>
+      <p class="eyebrow">試写まで</p>
+      <h2>9/25〜9/30 の日割り</h2>
+    </div>
+    <div class="days">
+      <div class="day peak">
+        <div class="d">9/25 木</div>
+        <div class="w">12:00 小林さん・野呂さんと顔合わせ／13:30 佐藤さん IPS写真整理MTG
+          <small>顔合わせでゴーグルを使って花の拡大サイズを確認。小林さんには音楽の尺の当たりを口頭で。作業に入れるのは夕方以降。</small></div>
+      </div>
+      <div class="day out">
+        <div class="d">9/26 金</div>
+        <div class="w">Blender fes（〜27）／根本さんの会・杉並
+          <small>作業日として数えない。</small></div>
+      </div>
+      <div class="day out">
+        <div class="d">9/27 土</div>
+        <div class="w">Blender fes／14:00 玲さん
+          <small>同上。</small></div>
+      </div>
+      <div class="day peak">
+        <div class="d">9/28 日</div>
+        <div class="w">正味1日
+          <small>花 C12 の仕上げと C10/C11 の2連発。ここで必達2件を終わらせる。</small></div>
+      </div>
+      <div class="day peak">
+        <div class="d">9/29 月</div>
+        <div class="w">正味1日／17:00 IPSお礼ご挨拶
+          <small>彗星1点とスライドショーの書き出し。持ち物の準備と動作確認まで。</small></div>
+      </div>
+      <div class="day">
+        <div class="d">9/30 火</div>
+        <div class="w">渋谷ドーム試写（〜22:00）
+          <small>枠1で確認 → インターバルで再書き出し → 枠2で再確認。</small></div>
+      </div>
+    </div>
+    <p style="font-size:.85rem; color:var(--muted);">正味3日で必達は「花2カット＋スライドショー＋彗星1点」。星とズビロフ城は 9/29 の残り時間次第。</p>
+  </section>
+
+  <section>
+    <div>
+      <p class="eyebrow">当日</p>
+      <h2>持ち物と現地作業</h2>
+    </div>
+    <ul>
+      <li><strong>ノートPC＋Blender</strong> — 現地で修正して書き出すため。リモート待機ではなく持参する方針で結論済み。</li>
+      <li><strong>Quest 2 と長いType-Cケーブル</strong> — Amateras DomePlayer のグリッド表示が Quest 2 で出ない問題（DK2 のジャイロが認識されない）は未解決。有線で再試行する。</li>
+      <li><strong>4:3 グリッド素材</strong> — 音を差し替えたもの。縦横比は 4:3 を基準に、横向きバージョンも用意できれば比較する。</li>
+      <li><strong>5秒刻みのスライドショー</strong> — 書き出し済みのものを持っていく。</li>
+      <li><strong>「宇宙の模型」の該当シーン</strong> — サイズ比較の基準として同じ環境で並べて出せるように。</li>
+    </ul>
+  </section>
+
+  <section>
+    <div>
+      <p class="eyebrow">試写と並走</p>
+      <h2>抱えている判断事項</h2>
+    </div>
+    <div class="note">
+      <span><b>音楽の尺</b> — 小林さんから「尺を決めないと譜面に影響する」と来ている。想定は 9/30 試写後にラフ仕上げ → 10/3 頃に渡す → 10/5 の週に作業 → 10/12 リハーサル → 10/15 録音。万博パートのコンテが未着手で尺が流動的なので、試写で当たりを付けるところまで。</span>
+      <span><b>素材の権利</b> — ミュシャのラフや下絵は財団所有の可能性が高い。サイン入りは使わない方針だが、絵そのものをパブリックドメインと主張できるかは未確認。自炊した素材集にラフが混在している可能性があり、投影前に洗い出しが必要。</span>
+      <span><b>万博シーンのコンテ</b> — 未着手。ここが決まらないと全体尺が固まらない。</span>
+    </div>
+  </section>
+
+  <section>
+    <div>
+      <p class="eyebrow">名称の整理</p>
+      <h2>ズビロフ城の表記</h2>
+    </div>
+    <p style="font-size:.9rem; color:var(--ink-2);">打合せ記録に「ズビル府城」「スピロフ城」「残月ビル」と別名で残っているのは、すべて同じ<strong>ズビロフ城（Zbiroh／西ボヘミア）</strong>です。ミュシャが《スラヴ叙事詩》のアトリエを借りた城で、彗星カットの舞台。テロップ・ファイル名・やり取りはこの表記に統一してください。</p>
+  </section>
+
+  <footer>
+    <span>出典：9/17・9/19・9/20・9/22・9/24 の映像演出打合せ記録、Google カレンダー（9/25〜10/2）</span>
+    <span>作成 2026-09-25</span>
+  </footer>
+</div>

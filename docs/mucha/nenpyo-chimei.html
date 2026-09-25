@@ -1,0 +1,217 @@
+<title>ミュシャ移動年表と地名規則</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+  :root{
+    color-scheme: light;
+    --paper:#eceded; --surface:#fbfbfa; --surface-2:#f1f2ef;
+    --ink:#23232b; --ink-2:#4c4c58; --muted:#71717f;
+    --rule:#d4d6d2; --rule-2:#e2e4e0;
+    --accent:#3f6350; --accent-soft:#dfe8e1;
+    --warn:#8a5d12; --warn-soft:#f2e7d0;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --sans: "Zen Kaku Gothic New", "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif;
+    --serif: "Zen Old Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme: dark;
+      --paper:#16161a; --surface:#1e1e24; --surface-2:#25252d;
+      --ink:#e8e8ec; --ink-2:#bcbcc6; --muted:#8e8e9c;
+      --rule:#33333d; --rule-2:#2a2a33;
+      --accent:#8fbfa3; --accent-soft:#25332b;
+      --warn:#d8ac5a; --warn-soft:#332a18;
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --paper:#16161a; --surface:#1e1e24; --surface-2:#25252d;
+    --ink:#e8e8ec; --ink-2:#bcbcc6; --muted:#8e8e9c;
+    --rule:#33333d; --rule-2:#2a2a33;
+    --accent:#8fbfa3; --accent-soft:#25332b;
+    --warn:#d8ac5a; --warn-soft:#332a18;
+  }
+  body{background:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.75; margin:0;}
+  .wrap{max-width:48rem; margin:0 auto; padding-inline:18px; padding-block:34px 72px; display:flex; flex-direction:column; gap:40px;}
+  h1{font-family:var(--serif); font-weight:700; font-size:clamp(1.6rem,5.2vw,2.25rem); line-height:1.35; margin:0; text-wrap:balance;}
+  h2{font-family:var(--serif); font-weight:700; font-size:1.2rem; margin:0; text-wrap:balance;}
+  p{margin:0;}
+  .eyebrow{font-family:var(--mono); font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin:0 0 10px;}
+  .lede{color:var(--ink-2); font-size:1rem; margin-top:14px;}
+  header{border-bottom:1px solid var(--rule); padding-bottom:26px;}
+  section{display:flex; flex-direction:column; gap:16px;}
+  .rules{display:flex; flex-direction:column; gap:0; border:1px solid var(--rule-2); background:var(--surface); counter-reset:r;}
+  .rule{display:grid; grid-template-columns:1.8rem 1fr; gap:14px; padding:14px 16px; border-bottom:1px solid var(--rule-2);}
+  .rule:last-child{border-bottom:0;}
+  .rule::before{counter-increment:r; content:counter(r); font-family:var(--mono); font-size:.85rem; color:var(--accent); padding-top:.2rem;}
+  .rule strong{font-size:.95rem;}
+  .rule p{font-size:.87rem; color:var(--ink-2); margin-top:4px;}
+  .ex{font-family:var(--mono); font-size:.82rem; background:var(--surface-2); padding:1px 6px; border-radius:2px; color:var(--ink); white-space:nowrap;}
+  .no{text-decoration:line-through; color:var(--muted);}
+  .scroll{overflow-x:auto; border:1px solid var(--rule-2); background:var(--surface);}
+  table{border-collapse:collapse; width:100%; font-size:.85rem; min-width:38rem;}
+  th,td{text-align:left; padding:9px 13px; border-bottom:1px solid var(--rule-2); vertical-align:top;}
+  thead th{font-size:.72rem; letter-spacing:.08em; color:var(--muted); font-weight:500; background:var(--surface-2); white-space:nowrap; position:sticky; top:0;}
+  tbody tr:last-child td{border-bottom:0;}
+  td.yr{font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--ink-2);}
+  td.lat{font-family:var(--mono); font-size:.8rem; color:var(--ink-2);}
+  .tag{display:inline-block; font-size:.68rem; font-family:var(--mono); padding:1px 7px; border-radius:2px; white-space:nowrap; background:var(--warn-soft); color:var(--warn);}
+  .era{background:var(--surface-2);}
+  .era td{font-family:var(--serif); font-weight:700; font-size:.85rem; color:var(--accent); letter-spacing:.04em;}
+  ul{margin:0; padding-left:1.15rem; display:flex; flex-direction:column; gap:7px; font-size:.9rem; color:var(--ink-2);}
+  li strong{color:var(--ink);}
+  .note{background:var(--surface); border:1px solid var(--rule-2); border-left:3px solid var(--warn); padding:14px 16px; font-size:.88rem; color:var(--ink-2); display:flex; flex-direction:column; gap:8px;}
+  .note b{color:var(--ink);}
+  footer{border-top:1px solid var(--rule); padding-top:20px; font-size:.8rem; color:var(--muted); display:flex; flex-direction:column; gap:6px;}
+  @media (max-width:430px){ .rule{grid-template-columns:1.3rem 1fr; gap:10px;} }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Mucha / IPS2026 — telop reference</p>
+    <h1>ミュシャの移動年表と地名の表記規則</h1>
+    <p class="lede">9/17 の打合せで「全カットに関わるので早く統一したい」とされた地名表記を、規則として決め切るための資料。あわせて移動の年表を一本化した。1860年から1918年までのミュシャの故郷は現在のチェコと国名が一致しないので、そこが表記の要点になる。</p>
+  </header>
+
+  <section>
+    <div>
+      <p class="eyebrow">決め</p>
+      <h2>テロップの表記規則</h2>
+    </div>
+    <div class="rules">
+      <div class="rule">
+        <div><strong>基本形は「都市名（地方名）」。国名は出さない。</strong>
+        <p><span class="ex">イヴァンチツェ（モラヴィア）</span> <span class="ex">プラハ（ボヘミア）</span>。1860〜1918年はオーストリア帝国／オーストリア＝ハンガリー帝国で、国名を出すと現代の「チェコ」と食い違う。地方名だけなら当時も現在も通る。</p></div>
+      </div>
+      <div class="rule">
+        <div><strong>国境を越えた移動を見せたいカットだけ、国名を添える。</strong>
+        <p><span class="ex">パリ（フランス）</span> <span class="ex">ミュンヘン（ドイツ帝国）</span>。ウィーンは帝国内の移動なので <span class="ex">ウィーン（オーストリア）</span> ではなく <span class="ex">ウィーン</span> 単体で置く。</p></div>
+      </div>
+      <div class="rule">
+        <div><strong>「チェコ」は1918年以降のカットだけ。</strong>
+        <p>それ以前は <span class="no">チェコのイヴァンチツェ</span> ではなく <span class="ex">モラヴィアのイヴァンチツェ</span>。1918年以降は <span class="ex">チェコスロヴァキア</span>（「チェコ」は当時存在しない国名）。</p></div>
+      </div>
+      <div class="rule">
+        <div><strong>カタカナは現代チェコ語読みに統一する。</strong>
+        <p><span class="ex">イヴァンチツェ</span> <span class="ex">ミクロフ</span> <span class="ex">ブルノ</span> <span class="ex">ズビロフ</span>。当時の公用語だったドイツ語名（アイベンシュッツ、ニコルスブルク、ブリュン）はテロップに使わない。観客が地図や現代の地名と結びつけられなくなる。</p></div>
+      </div>
+      <div class="rule">
+        <div><strong>ラテン文字を併記するときは現代チェコ語の正書法で、記号も省かない。</strong>
+        <p><span class="ex">Ivančice</span> <span class="ex">Hrušovany nad Jevišovkou</span> <span class="ex">Zbiroh</span>。ハーチェク・アクセントを落とすと別語になる。</p></div>
+      </div>
+      <div class="rule">
+        <div><strong>画面の中の史料は原綴のまま。統一するのはテロップだけ。</strong>
+        <p>当時の地図やポスターを絵として映す場合、そこに書かれたドイツ語・フランス語表記はいじらない。テロップ側でカタカナを添える。</p></div>
+      </div>
+      <div class="rule">
+        <div><strong>長い地名は初出だけフル、以降は通称に短縮する。</strong>
+        <p>初出 <span class="ex">フルショヴァニ・ナド・イェヴィショフコウ（モラヴィア）</span> → 以降 <span class="ex">エマホフ城</span>。ガンデック城も同様に城名で通す。</p></div>
+      </div>
+      <div class="rule">
+        <div><strong>地図カットに国境線は描かない。</strong>
+        <p>9/19 の判断どおり、国境は時代ごとに動くので正確な歴史地図は使えない。ヨーロッパ大陸のシルエット＋都市の点＋都市名だけで構成し、都市名は上の規則でタイプし直す。当時の地図は書体や描き方のトンマナを見るための参考資料として扱う。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div>
+      <p class="eyebrow">対応表</p>
+      <h2>地名の表記一覧</h2>
+    </div>
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr><th>テロップ表記</th><th>ラテン文字</th><th>当時のドイツ語名</th><th>地方</th><th>役割</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>イヴァンチツェ</td><td class="lat">Ivančice</td><td class="lat">Eibenschütz</td><td>モラヴィア</td><td>生地</td></tr>
+          <tr><td>ブルノ</td><td class="lat">Brno</td><td class="lat">Brünn</td><td>モラヴィア</td><td>少年期・聖歌隊</td></tr>
+          <tr><td>ウィーン</td><td class="lat">Wien</td><td class="lat">—</td><td>下オーストリア</td><td>劇場装飾工房</td></tr>
+          <tr><td>ミクロフ</td><td class="lat">Mikulov</td><td class="lat">Nikolsburg</td><td>モラヴィア</td><td>肖像画で生計</td></tr>
+          <tr><td>エマホフ城<br><span style="color:var(--muted);font-size:.8rem">（フルショヴァニ・ナド・イェヴィショフコウ）</span></td><td class="lat">Emmahof<br>Hrušovany nad Jevišovkou</td><td class="lat">Grusbach</td><td>モラヴィア</td><td>クーエン＝ベラシ伯の壁画</td></tr>
+          <tr><td>ガンデック城</td><td class="lat">Gandegg</td><td class="lat">Schloss Gandegg</td><td>チロル</td><td>伯の弟の城</td></tr>
+          <tr><td>ミュンヘン</td><td class="lat">München</td><td class="lat">—</td><td>バイエルン</td><td>美術アカデミー</td></tr>
+          <tr><td>パリ</td><td class="lat">Paris</td><td class="lat">—</td><td>—</td><td>1887〜1910の拠点</td></tr>
+          <tr><td>プラハ</td><td class="lat">Praha</td><td class="lat">Prag</td><td>ボヘミア</td><td>1910以降の定住地</td></tr>
+          <tr><td>ズビロフ</td><td class="lat">Zbiroh</td><td class="lat">Zbirow</td><td>西ボヘミア</td><td>《スラヴ叙事詩》のアトリエ</td></tr>
+          <tr><td>モラフスキー・クルムロフ</td><td class="lat">Moravský Krumlov</td><td class="lat">Mährisch Kromau</td><td>モラヴィア</td><td>叙事詩の長年の展示地</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:.85rem; color:var(--muted);">打合せ記録に残る「ズビル府城」「スピロフ城」「残月ビル」はすべてズビロフ城のこと。「イヴァンチェ」も正しくはイヴァンチツェ。</p>
+  </section>
+
+  <section>
+    <div>
+      <p class="eyebrow">国家の枠</p>
+      <h2>生きた79年に国は3回変わった</h2>
+    </div>
+    <ul>
+      <li><strong>1860〜1867</strong> オーストリア帝国。モラヴィア辺境伯領として。</li>
+      <li><strong>1867〜1918</strong> オーストリア＝ハンガリー帝国。ボヘミア・モラヴィアはオーストリア側（帝国領）。ミュシャの人生の大半がここ。</li>
+      <li><strong>1918〜1939</strong> チェコスロヴァキア共和国。ミュシャは紙幣・切手・国章のデザインを手がけた。</li>
+      <li><strong>1939</strong> ドイツによる占領。ミュシャは最初期に逮捕された一人。</li>
+    </ul>
+  </section>
+
+  <section>
+    <div>
+      <p class="eyebrow">年表</p>
+      <h2>移動の全記録</h2>
+    </div>
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr><th>年</th><th>場所</th><th>出来事</th></tr>
+        </thead>
+        <tbody>
+          <tr class="era"><td colspan="3">モラヴィアと修業時代</td></tr>
+          <tr><td class="yr">1860</td><td>イヴァンチツェ</td><td>7月24日、モラヴィアのイヴァンチツェに生まれる。</td></tr>
+          <tr><td class="yr">1870年代</td><td>ブルノ</td><td>聖ペテロ教会の聖歌隊員として過ごし、ブルノで学ぶ。</td></tr>
+          <tr><td class="yr">1878</td><td>プラハ</td><td>プラハの美術アカデミーを受験し不合格。<span class="tag">諸説あり</span></td></tr>
+          <tr><td class="yr">1879</td><td>ウィーン</td><td>劇場装飾の大手工房（カウツキー＝ブリオッシ＝ブルクハルト社）に入る。</td></tr>
+          <tr><td class="yr">1881</td><td>ウィーン → モラヴィア</td><td>12月8日のリング劇場火災で工房の主要な仕事が失われ、解雇されてモラヴィアへ戻る。</td></tr>
+          <tr><td class="yr">1882頃</td><td>ミクロフ</td><td>肖像画・看板・案内状などで生計を立てる。ここでクーエン＝ベラシ伯の目に留まる。<span class="tag">1881年末説あり</span></td></tr>
+          <tr><td class="yr">1883</td><td>エマホフ城（モラヴィア）</td><td>クーエン＝ベラシ伯の依頼で城の壁画を制作。</td></tr>
+          <tr><td class="yr">1883〜84</td><td>ガンデック城（チロル）</td><td>伯の弟エゴンの城へ移り、装飾を手がける。<span class="tag">年次に幅あり</span></td></tr>
+          <tr><td class="yr">1885</td><td>ミュンヘン</td><td>9月、伯の援助でミュンヘン美術アカデミーに入学。<span class="tag">1884年説あり</span></td></tr>
+          <tr class="era"><td colspan="3">パリ 1887〜1910</td></tr>
+          <tr><td class="yr">1887</td><td>パリ</td><td>アカデミー・ジュリアンに入学。引き続き伯の援助を受ける。</td></tr>
+          <tr><td class="yr">1888</td><td>パリ</td><td>アカデミー・コラロッシへ移る。</td></tr>
+          <tr><td class="yr">1889末</td><td>パリ</td><td>伯の援助が打ち切られ、挿絵と雑誌の仕事で自活する。</td></tr>
+          <tr><td class="yr">1894</td><td>パリ</td><td>年末、サラ・ベルナール主演《ジスモンダ》のポスターを手がけ、翌年初めの掲出で一夜にして知られる。</td></tr>
+          <tr><td class="yr">1900</td><td>パリ</td><td>パリ万国博覧会。ボスニア・ヘルツェゴヴィナ館の装飾を担当。</td></tr>
+          <tr><td class="yr">1902</td><td>プラハ・モラヴィア</td><td>ロダンのプラハ展に同行し、故郷を案内する。</td></tr>
+          <tr class="era"><td colspan="3">アメリカと帰郷</td></tr>
+          <tr><td class="yr">1904〜1910</td><td>アメリカ（6回の渡航）</td><td>ニューヨークの応用デザイン女学校、フィラデルフィアの美術学校、シカゴ美術館で教える。劇場の壁画も手がける。</td></tr>
+          <tr><td class="yr">1906</td><td>プラハ → アメリカ</td><td>6月10日、プラハでマリア・フルィティロヴァーと結婚。10月から1909年11月までシカゴとニューヨーク。</td></tr>
+          <tr><td class="yr">1909〜1910</td><td>レイクフォレスト・シカゴ</td><td>1909年11月末から1910年3月17日まで。この滞在で《スラヴ叙事詩》の資金の目処を得る。</td></tr>
+          <tr><td class="yr">1909〜1911</td><td>プラハ</td><td>市民会館・市長ホールの壁画を受注し、1910〜11年に制作。1910年にプラハへ帰り、50歳で定住。</td></tr>
+          <tr class="era"><td colspan="3">スラヴ叙事詩 1911〜1928</td></tr>
+          <tr><td class="yr">1911</td><td>ズビロフ城（西ボヘミア）</td><td>大画面を描ける広いアトリエと住居を城内に借り、《スラヴ叙事詩》に着手。</td></tr>
+          <tr><td class="yr">1912</td><td>ズビロフ</td><td>第1作《原故郷のスラヴ民族》完成。</td></tr>
+          <tr><td class="yr">1918</td><td>プラハ</td><td>チェコスロヴァキア独立。紙幣・切手・国章のデザインを担う。</td></tr>
+          <tr><td class="yr">1926</td><td>ズビロフ</td><td>最終作《スラヴ民族の賛歌》をもって全20作が完成。</td></tr>
+          <tr><td class="yr">1928</td><td>プラハ</td><td>独立10周年に合わせ、全作をプラハ市に寄贈・公開。</td></tr>
+          <tr><td class="yr">1939</td><td>プラハ</td><td>春、ドイツ軍の進駐直後にゲシュタポに逮捕され尋問を受ける。肺炎を起こし、7月14日、79歳の誕生日を10日前にして死去。</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div>
+      <p class="eyebrow">残り</p>
+      <h2>確認が必要なところ</h2>
+    </div>
+    <div class="note">
+      <span><b>年次に幅がある4点</b> — プラハ美術アカデミーの受験（1878年）、ミクロフ移住（1881年末か1882年）、ガンデック城の滞在年、ミュンヘン入学（1884年か1885年）。テロップで年を出すカットがあれば、その4点だけ財団の公式年表で裏を取ってください。</span>
+      <span><b>パトロンの名前</b> — クーエン＝ベラシ伯は資料によって「カール」「エドゥアルト」と分かれます。名前を画面に出すなら要確認。出さないなら「クーエン＝ベラシ伯」で通せます。</span>
+      <span><b>ミュシャ財団のサイト</b> — 一次情報にあたる muchafoundation.org は、この作業環境のネットワーク制限で参照できませんでした。上の年表は複数の二次資料を突き合わせたもので、大枠は一致しています。</span>
+    </div>
+  </section>
+
+  <footer>
+    <span>作成 2026-09-25 ／ 9/17 打合せの宿題「ミュシャの移動年表と地名表記ルールを調査・整理する」に対応</span>
+  </footer>
+</div>
