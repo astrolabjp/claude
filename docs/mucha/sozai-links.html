@@ -1,0 +1,205 @@
+<title>古地図とパリの素材出典</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+  :root{
+    color-scheme: light;
+    --paper:#eceded; --surface:#fbfbfa; --surface-2:#f1f2ef;
+    --ink:#23232b; --ink-2:#4c4c58; --muted:#71717f;
+    --rule:#d4d6d2; --rule-2:#e2e4e0;
+    --accent:#3f6350; --accent-soft:#dfe8e1;
+    --warn:#8a5d12; --warn-soft:#f2e7d0;
+    --stop:#8b3a3a; --stop-soft:#f3dedd;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --sans: "Zen Kaku Gothic New", "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif;
+    --serif: "Zen Old Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme: dark;
+      --paper:#16161a; --surface:#1e1e24; --surface-2:#25252d;
+      --ink:#e8e8ec; --ink-2:#bcbcc6; --muted:#8e8e9c;
+      --rule:#33333d; --rule-2:#2a2a33;
+      --accent:#8fbfa3; --accent-soft:#25332b;
+      --warn:#d8ac5a; --warn-soft:#332a18;
+      --stop:#df9a98; --stop-soft:#342020;
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --paper:#16161a; --surface:#1e1e24; --surface-2:#25252d;
+    --ink:#e8e8ec; --ink-2:#bcbcc6; --muted:#8e8e9c;
+    --rule:#33333d; --rule-2:#2a2a33;
+    --accent:#8fbfa3; --accent-soft:#25332b;
+    --warn:#d8ac5a; --warn-soft:#332a18;
+    --stop:#df9a98; --stop-soft:#342020;
+  }
+  body{background:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.75; margin:0;}
+  .wrap{max-width:47rem; margin:0 auto; padding-inline:18px; padding-block:34px 72px; display:flex; flex-direction:column; gap:40px;}
+  h1{font-family:var(--serif); font-weight:700; font-size:clamp(1.6rem,5.2vw,2.25rem); line-height:1.35; margin:0; text-wrap:balance;}
+  h2{font-family:var(--serif); font-weight:700; font-size:1.2rem; margin:0; text-wrap:balance;}
+  h3{font-size:.9rem; font-weight:700; margin:0; color:var(--accent); letter-spacing:.02em;}
+  p{margin:0;}
+  a{color:var(--accent); text-decoration:underline; text-underline-offset:2px; word-break:break-all;}
+  a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+  .eyebrow{font-family:var(--mono); font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin:0 0 10px;}
+  .lede{color:var(--ink-2); font-size:1rem; margin-top:14px;}
+  header{border-bottom:1px solid var(--rule); padding-bottom:26px;}
+  section{display:flex; flex-direction:column; gap:16px;}
+  .src{background:var(--surface); border:1px solid var(--rule-2); padding:15px 17px; display:flex; flex-direction:column; gap:9px;}
+  .src.go{border-left:3px solid var(--accent);}
+  .src.care{border-left:3px solid var(--warn);}
+  .srchead{display:flex; flex-wrap:wrap; align-items:baseline; gap:8px 10px;}
+  .srchead strong{font-size:1rem;}
+  .src p{font-size:.88rem; color:var(--ink-2);}
+  .links{display:flex; flex-direction:column; gap:4px; font-family:var(--mono); font-size:.78rem;}
+  .pill{display:inline-block; font-size:.68rem; font-family:var(--mono); letter-spacing:.05em; padding:2px 8px; border-radius:2px; white-space:nowrap;}
+  .p-free{background:var(--accent-soft); color:var(--accent);}
+  .p-care{background:var(--warn-soft); color:var(--warn);}
+  .p-ask{background:var(--stop-soft); color:var(--stop);}
+  .scroll{overflow-x:auto; border:1px solid var(--rule-2); background:var(--surface);}
+  table{border-collapse:collapse; width:100%; font-size:.84rem; min-width:40rem;}
+  th,td{text-align:left; padding:9px 13px; border-bottom:1px solid var(--rule-2); vertical-align:top;}
+  thead th{font-size:.72rem; letter-spacing:.08em; color:var(--muted); font-weight:500; background:var(--surface-2); white-space:nowrap;}
+  tbody tr:last-child td{border-bottom:0;}
+  .note{background:var(--surface); border:1px solid var(--rule-2); border-left:3px solid var(--stop); padding:14px 16px; font-size:.88rem; color:var(--ink-2); display:flex; flex-direction:column; gap:8px;}
+  .note b{color:var(--ink);}
+  ul{margin:0; padding-left:1.15rem; display:flex; flex-direction:column; gap:7px; font-size:.9rem; color:var(--ink-2);}
+  li strong{color:var(--ink);}
+  footer{border-top:1px solid var(--rule); padding-top:20px; font-size:.8rem; color:var(--muted);}
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Mucha / IPS2026 — source & licence</p>
+    <h1>古地図とパリの素材、出典とライセンス</h1>
+    <p class="lede">9/17 の宿題2件（1890年代ヨーロッパの古地図、1900年前後のパリのパノラマ）の探索先を、使える条件ごとに並べたもの。ライセンスは実際に配布元が掲げている条件を確認して書いています。</p>
+  </header>
+
+  <section>
+    <div>
+      <p class="eyebrow">最初に</p>
+      <h2>先に決めたい分岐がひとつある</h2>
+    </div>
+    <div class="note">
+      <span><b>この番組が有料上映かどうか</b>で、使える素材が変わります。David Rumsey は非商用限定（CC BY-NC-SA）、Gallica は商用だと有償ライセンスが必要。一方 <b>Library of Congress・Paris Musées・Wikimedia の3つは、有料・無料どちらでも条件なしで使えます</b>。</span>
+      <span>なので、権利の判断を待たずに動けます。<b>この3つを主軸に据えて素材集めを始め、Rumsey と Gallica はトンマナ参考（画面に出さない）に限る</b>——これが待ち時間ゼロの進め方です。</span>
+      <span>9/22 に出ていた「ミュシャのラフ・下絵は財団所有かもしれない」という懸念とは別の話です。あちらは自炊素材集の洗い出しが必要なまま残っています。</span>
+    </div>
+  </section>
+
+  <section>
+    <div>
+      <p class="eyebrow">地図</p>
+      <h2>1890年代ヨーロッパの古地図</h2>
+    </div>
+    <p style="font-size:.9rem; color:var(--ink-2);">9/19 の判断は「正確な歴史地図は使えないので、大陸のシルエット程度に留め、ベクターを別途購入して国名をタイプし直す」。つまり探しているのは<strong>絵として貼る地図ではなく、書体・彩色・線の雰囲気の参考</strong>と、<strong>当時の都市位置の裏取り</strong>です。その2用途で分けました。</p>
+
+    <h3>トンマナの参考として</h3>
+    <div class="src go">
+      <div class="srchead"><strong>Andrees Allgemeiner Handatlas</strong><span class="pill p-free">PD・無償</span></div>
+      <p>1881〜1937年に版を重ねたドイツ語圏の代表的な家庭用大型地図帳。クロモリトグラフの色味と地名書体が、まさに探している時代のトンマナです。Internet Archive に 1881・1889・1893・1899 の各版。<strong>1899年版がミュシャのパリ期と同時代</strong>なので、まずこれを見るのが早い。</p>
+      <div class="links">
+        <a href="https://archive.org/details/andrees-allgemeiner-handatlas-1881-text">archive.org/details/andrees-allgemeiner-handatlas-1881-text</a>
+        <a href="https://archive.org/details/andrees_allgemeiner_handatlas00biel">archive.org/details/andrees_allgemeiner_handatlas00biel</a>
+      </div>
+    </div>
+    <div class="src go">
+      <div class="srchead"><strong>Stieler's Hand-Atlas</strong><span class="pill p-free">PD・無償</span></div>
+      <p>銅版彫刻の細密な線が特徴で、Andrees とは対照的な硬質さ。線の密度をどこまで出すかの基準として比較用に。</p>
+      <div class="links"><a href="https://archive.org/details/stielersatlasofm01stie">archive.org/details/stielersatlasofm01stie</a></div>
+    </div>
+    <div class="src care">
+      <div class="srchead"><strong>David Rumsey Map Collection</strong><span class="pill p-care">CC BY-NC-SA 3.0</span></div>
+      <p>検索性が最も良く、フル解像度の JP2 が落とせます。ただし<strong>原図がパブリックドメインでも、スキャン画像には CC BY-NC-SA 3.0 が付く</strong>点に注意。Rumsey 側は「商用とは複製物の販売を指す」とも書いていますが、番組で画面に出すなら事前に問い合わせるのが安全です（rumseymapcenter@stanford.edu）。トンマナ確認に使うだけなら問題になりません。</p>
+      <div class="links"><a href="https://www.davidrumsey.com/about/copyright-and-permissions">davidrumsey.com/about/copyright-and-permissions</a></div>
+    </div>
+
+    <h3>当時の都市位置と地形の裏取りに</h3>
+    <div class="src care">
+      <div class="srchead"><strong>Arcanum Maps / MAPIRE 第三次軍事測量</strong><span class="pill p-ask">条件不明・要問い合わせ</span></div>
+      <p><strong>1869〜1887年</strong>の測量で、ハプスブルク帝国全域を 1:75,000 で覆っています。ミュシャがモラヴィアを動いていた時期とそのまま重なるので、イヴァンチツェ・ミクロフ・フルショヴァニ・ズビロフの当時の地名と地形をそのまま確認できます。地名規則の裏取りに最適。ただし Arcanum 社のDVDに由来するデータで、<strong>公開情報からは利用条件が確認できませんでした</strong>。画面に出すなら要問い合わせ。位置確認の道具として使うのが無難です。</p>
+      <div class="links"><a href="https://maps.arcanum.com/en/map/thirdsurvey75000/">maps.arcanum.com/en/map/thirdsurvey75000/</a></div>
+    </div>
+    <div class="src go">
+      <div class="srchead"><strong>Wikimedia Commons</strong><span class="pill p-free">PD-old・無償</span></div>
+      <p>19世紀の地図は PD-old で、出典表記だけで商用も可。解像度は元次第ですが、<strong>ベクター化の下敷きにするならここが一番手間がない</strong>。購入したベクターと組み合わせる方針とも噛み合います。</p>
+      <div class="links"><a href="https://commons.wikimedia.org/wiki/Category:Old_maps_of_Europe">commons.wikimedia.org/wiki/Category:Old_maps_of_Europe</a></div>
+    </div>
+  </section>
+
+  <section>
+    <div>
+      <p class="eyebrow">パリ</p>
+      <h2>1900年前後のパリのパノラマ</h2>
+    </div>
+    <div class="src go">
+      <div class="srchead"><strong>Library of Congress / Detroit Publishing Co. フォトクローム</strong><span class="pill p-free">制限なし・無償</span></div>
+      <p>本命です。万博会場、各国パビリオン、パリ市街。<strong>300点以上のフォトクロームに大判のパノラマ版とマンモスプレート版を含みます</strong>。「no known restrictions on reproduction」で、LoC は許諾料を取りません。TIFF で落とせるので、ドーム解像度にも耐えます。フォトクロームの発色はそのまま絵として使えるトーンです。</p>
+      <div class="links">
+        <a href="https://www.loc.gov/collections/photochrom-prints/">loc.gov/collections/photochrom-prints/</a>
+        <a href="https://www.loc.gov/item/2018695448/">loc.gov/item/2018695448/ — The Paris Exposition 1900</a>
+        <a href="https://www.loc.gov/item/2001698561/">loc.gov/item/2001698561/ — Ancient Paris, Exposition Universelle 1900</a>
+        <a href="https://www.loc.gov/item/2001698559">loc.gov/item/2001698559 — The Pavilions of the Nations II</a>
+        <a href="https://www.loc.gov/resource/ppmsc.05216/">loc.gov/resource/ppmsc.05216/ — Exposition Universelle 1900</a>
+      </div>
+    </div>
+    <div class="src go">
+      <div class="srchead"><strong>Paris Musées Collections</strong><span class="pill p-free">CC0・無償</span></div>
+      <p>カルナヴァレ博物館など<strong>パリ市立14館</strong>が、2020年にパブリックドメイン作品 15万点を <strong>CC0</strong> で開放しました。300dpi でダウンロードでき、出典表記の義務さえありません。当時のパリを描いた絵画・写真・版画の層が最も厚いので、<strong>「逆さまのパリ」の元絵を探すならここ</strong>。水面に映る街の絵はカルナヴァレの収蔵と相性が良いはずです。</p>
+      <div class="links"><a href="https://www.parismuseescollections.paris.fr/">parismuseescollections.paris.fr</a></div>
+    </div>
+    <div class="src care">
+      <div class="srchead"><strong>Gallica / フランス国立図書館</strong><span class="pill p-care">非商用は無償／商用は有償</span></div>
+      <p>万博の公式アルバムや写真帖が豊富で、量では最強。<strong>非商用なら出典表記（「Source gallica.bnf.fr / BnF」）だけで無償</strong>ですが、<strong>商用利用は有償ライセンス</strong>になります（utilisation.commerciale@bnf.fr）。番組の性格で分岐するので、ここを使いたい絵が出てきた時点で早めに問い合わせてください。</p>
+      <div class="links"><a href="https://gallica.bnf.fr/accueil/fr/html/conditions-dutilisation-de-gallica">gallica.bnf.fr — conditions d'utilisation</a></div>
+    </div>
+    <div class="src go">
+      <div class="srchead"><strong>Getty Open Content / NYPL Digital Collections / Rijksmuseum</strong><span class="pill p-free">PD・無償</span></div>
+      <p>いずれもパブリックドメイン作品を高解像度で無償公開。LoC と Paris Musées で足りない画角を埋める補完用に。</p>
+      <div class="links">
+        <a href="https://www.getty.edu/art/collection/search">getty.edu/art/collection/search</a>
+        <a href="https://digitalcollections.nypl.org/">digitalcollections.nypl.org</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div>
+      <p class="eyebrow">一覧</p>
+      <h2>条件の早見表</h2>
+    </div>
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr><th>出典</th><th>ライセンス</th><th>有料上映で使えるか</th><th>表記義務</th><th>解像度</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Library of Congress</td><td>制限なし</td><td>使える</td><td>なし（任意）</td><td>TIFF・大判あり</td></tr>
+          <tr><td>Paris Musées</td><td>CC0</td><td>使える</td><td>なし</td><td>300dpi</td></tr>
+          <tr><td>Wikimedia Commons</td><td>PD-old</td><td>使える</td><td>出典表記</td><td>元次第</td></tr>
+          <tr><td>Getty / NYPL / Rijksmuseum</td><td>PD・オープン</td><td>使える</td><td>出典表記</td><td>高解像度</td></tr>
+          <tr><td>Internet Archive の地図帳</td><td>PD</td><td>使える</td><td>なし（任意）</td><td>版によって差</td></tr>
+          <tr><td>David Rumsey</td><td>CC BY-NC-SA 3.0</td><td>要確認</td><td>表記＋継承</td><td>フル解像度 JP2</td></tr>
+          <tr><td>Gallica / BnF</td><td>非商用無償・商用有償</td><td>有償ライセンスが必要</td><td>Source gallica.bnf.fr / BnF</td><td>高解像度</td></tr>
+          <tr><td>Arcanum / MAPIRE</td><td>不明</td><td>要問い合わせ</td><td>不明</td><td>測量図</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div>
+      <p class="eyebrow">次の一手</p>
+      <h2>手を動かす順番</h2>
+    </div>
+    <ul>
+      <li><strong>LoC のフォトクロームから万博とパリ市街を一括で落とす。</strong>権利の確認を待たずに始められて、しかも大判パノラマが入っている。</li>
+      <li><strong>Paris Musées で「逆さまのパリ」の元絵を探す。</strong>CC0 なので拾った時点で使用が確定する。</li>
+      <li><strong>Andrees 1899年版で地図のトンマナを決める。</strong>書体と彩色の方針が決まれば、購入するベクターの選定基準も決まる。</li>
+      <li><strong>MAPIRE で4都市の当時の位置と地名を確認する。</strong>地名規則のラテン文字表記の裏取りになる。画面には出さない。</li>
+      <li><strong>Gallica を使いたくなったら、その時点で商用利用の可否を問い合わせる。</strong>先回りして聞く必要はない。</li>
+    </ul>
+  </section>
+
+  <footer>作成 2026-09-25 ／ ライセンス条件は各配布元の公開ページを確認したもの。Arcanum のみ確認できず。</footer>
+</div>
